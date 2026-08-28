@@ -1,0 +1,19 @@
+name: Example 2 Workflow
+
+on: push
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print a message
+        run: echo "Hello from example-2, pushed via VS Code!"
+
+      - name: Show the branch
+        run: echo "Running on ${{ github.ref_name }}"
+
+      - name: Show current date
+        run: date
+
+      - name: Show current date
+        run: ls -lrth
