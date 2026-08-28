@@ -1,0 +1,21 @@
+name: example-4 - Setup Node and Run
+
+on: push
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20'
+            
+            - name: Confirm node is installed
+              run: node -v
+
+            - name: Run the app
+              run: node app.js
