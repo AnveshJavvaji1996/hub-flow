@@ -1,0 +1,27 @@
+name: Example 5 - npm install on runner
+
+on: workflow_dispatch
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+           - name: Checkout repo code
+             uses: action/checkout@v4
+            
+           - name: setup Node-JS
+             uses: actions/setup-node@v4
+             with:
+                node-version: '20'
+           
+           - name: Initialize npm Project
+             run: npm init -y
+             
+           - name: Install chalk dependency
+             run: npm install chalk@4
+
+           - name: Run the app
+             run: node app.js  
+             
+
+
