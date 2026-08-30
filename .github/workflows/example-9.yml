@@ -1,0 +1,43 @@
+name: Example 9 - Artifacts
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v4
+
+      - name: Create a build output file
+        run: |
+          mkdir -p dist
+          echo "Build completed at $(date)" > dist/build-info.txt
+          echo "This file was created in the BUILD job" >> dist/build-info.txt
+
+      - name: Show what we created
+        run: cat dist/build-info.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+
+      - name: Prove the file made it to a different VM
+        run: |
+          echo "Files present on this fresh runner:"
+          ls -lrth dist/
+          echo "---"
+          echo "Contents of the file:"
+          cat dist/build-info.txt
