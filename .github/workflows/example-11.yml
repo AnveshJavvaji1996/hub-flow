@@ -1,0 +1,28 @@
+name: Example 11 - Docker Build and Run
+
+on: workflow_dispatch
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t hub-flow-app .
+
+      - name: Run the container
+        run: docker run hub-flow-app
+
+      - name: Show image details
+        run: docker images hub-flow-app
+
+      - name: Check Linux distro inside the container
+        run: docker run --rm hub-flow-app cat /etc/os-release
+
+      - name: Check Node version inside the container
+        run: docker run --rm hub-flow-app node -v
+
+      - name: Go inside the container and explore
+        run: docker run --rm hub-flow-app sh -c "cat /etc/os-release && uname -a && node -v && ls -la /app"
