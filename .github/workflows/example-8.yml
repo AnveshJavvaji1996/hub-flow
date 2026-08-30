@@ -1,0 +1,37 @@
+name: Multiple Jobs with needs
+
+on: workflow_dispatch
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out the repo code
+              uses: actions/checkout@v4
+            
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with: 
+                 node-version: '20'
+            
+            - name: Simulate running tests
+              run:  echo "Running tests .... all passed"
+
+    build:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout repo code
+              uses: actions/checkout@v4
+
+            - name: Simulate deploy step
+              run: echo "Deploy the app"
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo code
+              uses: actions/checkout@v4
+
+            - name: Simulate deploy step
+              run: echo "Deploying the app..."
