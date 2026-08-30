@@ -1,0 +1,28 @@
+name: Example 6 - Env Vars and Secrets
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: production
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Initialize npm project
+        run: npm init -y
+
+      - name: Install chalk dependency
+        run: npm install chalk@4
+
+      - name: Run the app
+        run: node app.js
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
