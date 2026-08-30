@@ -1,0 +1,30 @@
+name: Example 10 - Matrix Builds
+
+on: workflow_dispatch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Confirm the version installed
+        run: node -v
+
+      - name: Initialize npm project
+        run: npm init -y
+
+      - name: Install chalk dependency
+        run: npm install chalk@4
+
+      - name: Run the app
+        run: node app.js
