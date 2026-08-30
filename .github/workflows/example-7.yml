@@ -1,0 +1,34 @@
+name: Example 7 - Conditionals
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Only run on main branch
+        if: github.ref_name == 'main'
+        run: echo "This step ran because we're on the main branch"
+
+      - name: Only run on a branch that is NOT main
+        if: github.ref_name != 'main'
+        run: echo "This step ran because we're NOT on main"
+
+      - name: This step will intentionally fail
+        run: exit 1
+
+      - name: Only run if the previous step failed
+        if: failure()
+        run: echo "The previous step failed! Running cleanup/notification logic here."
+
+      - name: This always runs, pass or fail
+        if: always()
+        run: echo "This step runs no matter what happened above"
