@@ -1,9 +1,0 @@
-name: CI Pipeline - Test, Build, Scan, Push
-
-on: workflow_dispatch
-
-jobs:
-  test:
-    uses: ./.github/workflows/reusable-test.yml
-    with:
-      node-version: '20'
